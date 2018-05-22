@@ -1,0 +1,49 @@
+-----------------------------------------------------
+Generator
+-----------------------------------------------------
+
+GeneratorManager (Singleton)
+	Terrain Terrain
+	void InvokeTerrainModifier()
+	void InvokeHouseGenerators()
+
+TerrainModifier
+	void Generate()
+
+HouseGenerator
+	void Generate()
+
+-----------------------------------------------------
+Runtime
+-----------------------------------------------------
+
+EntityController
+	Sprite3D sprite
+	static List<EntityController> AllInstances
+
+PlayerController : EntityController
+	bool Controllable
+	static PlayerController Instance
+
+NPCController : EntityController
+	Event Event
+	float TriggerRange
+
+EnemyController : EntityController
+	float ViewRange
+	float MovementSpeed
+
+EventVolume
+	delegate void EventRun()
+
+PressurePlate
+	delegate void EventRun()
+
+Event
+	EntityController[] UsedEntities
+	void Run()
+	void Trigger()
+	void Begin()
+	void End()
+	delegate void OnBegin()
+	delegate void OnEnd()
