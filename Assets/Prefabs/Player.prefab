@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 136691838989982542}
   - component: {fileID: 114571781894487902}
   - component: {fileID: 114302915223842840}
+  - component: {fileID: 114857761272164628}
+  - component: {fileID: 114966284811742192}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -68,8 +70,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1733333040825414}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: 0, y: 0.935, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.288, y: 0.935, z: -1.597}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4676399450680676}
@@ -288,6 +290,30 @@ MonoBehaviour:
     slowDownRate: 90
     airControl: 0
     shellOffset: 0
+--- !u!114 &114857761272164628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1733333040825414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9c1b1cc95fe0f438952c86134ad2f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerTag: Player
+--- !u!114 &114966284811742192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1733333040825414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9c1b1cc95fe0f438952c86134ad2f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerTag: Any
 --- !u!124 &124743592558615174
 Behaviour:
   m_ObjectHideFlags: 1

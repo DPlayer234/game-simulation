@@ -176,12 +176,13 @@
             }
 
             Vector3 scale = GeneratorManager.TerrainData.heightmapScale;
-            scale.y = 0;
+            Vector3 position = this.chosenPosition + this.flattenSize * 0.5f * scale;
+            position.y = GeneratorManager.TerrainData.GetHeight(this.chosenSample.x, this.chosenSample.y);
 
             MonoBehaviour.Instantiate(
                 this.housePrefab,
-                this.chosenPosition + scale * this.flattenSize,
-                Quaternion.identity);
+                position,
+                Quaternion.EulerAngles(0.0f, Random.Range(0.0f, 360.0f), 0.0f));
         }
     }
 }

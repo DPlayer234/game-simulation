@@ -251,7 +251,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1021973111
 AudioListener:
   m_ObjectHideFlags: 0
@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 1210031929}
   - component: {fileID: 1210031930}
   - component: {fileID: 1210031933}
+  - component: {fileID: 1210031931}
   m_Layer: 0
   m_Name: HouseGenerators
   m_TagString: Untagged
@@ -357,7 +358,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flattenSize: 10
-  housePrefab: {fileID: 0}
+  housePrefab: {fileID: 1167291672627110, guid: e65d001f7c2ca884dad50452e1636875,
+    type: 2}
+--- !u!114 &1210031931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210031928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5daba15f0853b44b9abcb5c7e43a301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flattenSize: 2
+  housePrefab: {fileID: 1733333040825414, guid: 25115fb3908583e478b35ba8ff259f1b,
+    type: 2}
 --- !u!114 &1210031933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,7 +386,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flattenSize: 15
-  housePrefab: {fileID: 0}
+  housePrefab: {fileID: 1555548289369954, guid: 96cca42a1c7be8141a10364acc2a45a7,
+    type: 2}
 --- !u!1 &1432631912
 GameObject:
   m_ObjectHideFlags: 0

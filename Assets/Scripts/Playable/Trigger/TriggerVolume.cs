@@ -14,20 +14,21 @@
         /// </summary>
         public string TriggerTag = string.Empty;
 
-        /// <summary> The Event to trigger </summary>
-        private UnityEvent TriggerEvent;
+        /// <summary> The Event to trigger upon entering </summary>
+        public UnityEvent EnterEvent;
+
+        /// <summary> The Event to trigger upon exiting </summary>
+        public UnityEvent ExitEvent;
 
         /// <summary>
-        ///     Called by Unity when another collider enters this one.
+        ///     Invokes a specific event if there is a triggerer with a matching tag.
         /// </summary>
-        /// <param name="other"></param>
-        private void OnTriggerEnter(Collider other)
+        /// <param name="unityEvent"></param>
+        public void InvokeIfMatchingTriggerer(Triggerer triggerer, UnityEvent unityEvent)
         {
-            Triggerer triggerer = other.collider.GetComponent<Triggerer>();
-
-            if (triggerer != null && triggerer.TriggerTag == this.TriggerTag)
+            if (triggerer.TriggerTag == this.TriggerTag)
             {
-                this.TriggerEvent.Invoke();
+                unityEvent.Invoke();
             }
         }
     }

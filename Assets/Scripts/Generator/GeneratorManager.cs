@@ -69,8 +69,8 @@
         private void Start()
         {
             this.InvokeTerrainHeightGenerator();
-            this.InvokeHouseGenerators();
             this.InvokeTerrainPainter();
+            this.InvokeHouseGenerators();
         }
 
         /// <summary>
