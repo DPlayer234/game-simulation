@@ -20,6 +20,10 @@
         [SerializeField]
         private GameObject housePrefab;
 
+        /// <summary> The transform to parent the newly spawned objects to. May be none. </summary>
+        [SerializeField]
+        private Transform parentTo;
+
         /// <summary> The chosen position to generate a house at </summary>
         private Vector3 chosenPosition;
 
@@ -70,12 +74,14 @@
 
             do
             {
+                // Random position that would leave the entire rectangle on the terrain
                 samplePosition = new Vector2Int(
                     Random.Range(0, GeneratorManager.TerrainData.heightmapWidth - this.flattenSize - 1),
                     Random.Range(0, GeneratorManager.TerrainData.heightmapHeight - this.flattenSize - 1));
 
                 valid = true;
 
+                // Check all already used rectangles for intersections.
                 foreach (RectInt area in HouseGenerator.usedAreas)
                 {
                     if (area.Contains(samplePosition) ||
@@ -100,7 +106,7 @@
         {
             Vector3 terrainSize = GeneratorManager.TerrainData.size;
 
-            // Choose a random sample position
+            // Get a point
             Vector2Int samplePosition = this.GetRandomPoint();
 
             // Get the height at that point
@@ -171,18 +177,22 @@
         {
             if (this.housePrefab == null)
             {
+                // This is probably a mistake.
                 Debug.LogWarning("There is no house-prefab.");
                 return;
             }
 
+            // Get the position
             Vector3 scale = GeneratorManager.TerrainData.heightmapScale;
             Vector3 position = this.chosenPosition + this.flattenSize * 0.5f * scale;
             position.y = GeneratorManager.TerrainData.GetHeight(this.chosenSample.x, this.chosenSample.y);
 
+            // Instantiate the object
             MonoBehaviour.Instantiate(
                 this.housePrefab,
                 position,
-                Quaternion.EulerAngles(0.0f, Random.Range(0.0f, 360.0f), 0.0f));
+                Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f),
+                this.parentTo);
         }
     }
 }

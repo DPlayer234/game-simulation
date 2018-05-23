@@ -7,7 +7,7 @@
     ///     The component manages and invokes the random generation.
     /// </summary>
     [DisallowMultipleComponent]
-    public class GeneratorManager : Singleton<GeneratorManager>
+    public class GeneratorManager : MonoSingleton<GeneratorManager>
     {
         /// <summary> The terrain to be used in the generation. </summary>
         [SerializeField]

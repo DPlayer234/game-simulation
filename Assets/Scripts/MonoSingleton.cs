@@ -6,7 +6,7 @@ namespace DPlay
     ///     Defines a new MonoBehaviour singleton
     /// </summary>
     /// <typeparam name="T">The type of the class</typeparam>
-    public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
+    public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
     {
         /// <summary> The current instance of the singleton </summary>
         public static T Instance { get; private set; }
@@ -15,7 +15,7 @@ namespace DPlay
         ///     Returns the instance as T
         /// </summary>
         /// <param name="instance">The instance to convert</param>
-        public static implicit operator T(Singleton<T> instance)
+        public static implicit operator T(MonoSingleton<T> instance)
         {
             return instance as T;
         }
@@ -28,14 +28,14 @@ namespace DPlay
         /// <param name="destroyGameObject">Whether to destroy the GameObject if this instance is destroyed</param>
         protected void NewPreferThis(bool destroyGameObject = false)
         {
-            if (Singleton<T>.Instance == this) return;
+            if (MonoSingleton<T>.Instance == this) return;
 
-            if (Singleton<T>.Instance != null)
+            if (MonoSingleton<T>.Instance != null)
             {
                 this.DestroyOld(destroyGameObject);
             }
 
-            Singleton<T>.Instance = this;
+            MonoSingleton<T>.Instance = this;
         }
 
         /// <summary>
@@ -46,15 +46,15 @@ namespace DPlay
         /// <param name="destroyGameObject">Whether to destroy the GameObject if this instance is destroyed</param>
         protected void NewPreferOld(bool destroyGameObject = false)
         {
-            if (Singleton<T>.Instance == this) return;
+            if (MonoSingleton<T>.Instance == this) return;
 
-            if (Singleton<T>.Instance != null)
+            if (MonoSingleton<T>.Instance != null)
             {
                 this.DestroySelf(destroyGameObject);
                 return;
             }
 
-            Singleton<T>.Instance = this;
+            MonoSingleton<T>.Instance = this;
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace DPlay
         private void DestroyOld(bool destroyGameObject = false)
         {
             Debug.LogWarning("There was an additional active " + this.GetType() + ". The old instance was destroyed.");
-            Singleton<T>.Instance.DestroyInstance(destroyGameObject);
+            MonoSingleton<T>.Instance.DestroyInstance(destroyGameObject);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace DPlay
             }
             else
             {
-                MonoBehaviour.Destroy(Singleton<T>.Instance);
+                MonoBehaviour.Destroy(MonoSingleton<T>.Instance);
             }
         }
     }

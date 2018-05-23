@@ -7,7 +7,7 @@
     ///     This generates the terrain's height.
     /// </summary>
     [DisallowMultipleComponent]
-    public class TerrainHeightGenerator : Singleton<TerrainHeightGenerator>
+    public class TerrainHeightGenerator : MonoSingleton<TerrainHeightGenerator>
     {
         /// <summary> This is the multiplier for the terrain height. </summary>
         [SerializeField]
