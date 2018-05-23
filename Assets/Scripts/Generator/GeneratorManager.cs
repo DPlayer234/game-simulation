@@ -37,11 +37,23 @@
         }
 
         /// <summary>
+        ///     Returns the attached Terrain or throws an exception.
+        /// </summary>
+        /// <returns>The Terrain</returns>
+        public static Terrain AssertTerrain()
+        {
+            if (GeneratorManager.Terrain == null)
+                throw new GeneratorException("There is no Terrain attached to this GameObject.");
+
+            return GeneratorManager.Terrain;
+        }
+
+        /// <summary>
         ///     Called by Unity to initialize the <see cref="GeneratorManager"/> class.
         /// </summary>
         private void Awake()
         {
-            this.NewPreferOld(true);
+            this.NewPreferOld(false);
 
             if (this.terrain == null)
             {
@@ -56,22 +68,37 @@
         /// </summary>
         private void Start()
         {
-            this.InvokeTerrainGenerator();
+            this.InvokeTerrainHeightGenerator();
             this.InvokeHouseGenerators();
+            this.InvokeTerrainPainter();
         }
 
         /// <summary>
-        ///     Invokes the terrain generator.
+        ///     Invokes the terrain height generator.
         /// </summary>
-        private void InvokeTerrainGenerator()
+        private void InvokeTerrainHeightGenerator()
         {
-            if (TerrainGenerator.Instance == null)
+            if (TerrainHeightGenerator.Instance == null)
             {
-                Debug.LogWarning("There is no TerrainGenerator.");
+                Debug.LogWarning("There is no TerrainHeightGenerator.");
                 return;
             }
 
-            TerrainGenerator.Instance.Invoke();
+            TerrainHeightGenerator.Instance.Invoke();
+        }
+
+        /// <summary>
+        ///     Invokes the terrain painter.
+        /// </summary>
+        private void InvokeTerrainPainter()
+        {
+            if (TerrainPainter.Instance == null)
+            {
+                Debug.LogWarning("There is no TerrainPainter.");
+                return;
+            }
+
+            TerrainPainter.Instance.Invoke();
         }
 
         /// <summary>
@@ -79,6 +106,8 @@
         /// </summary>
         private void InvokeHouseGenerators()
         {
+            HouseGenerator.ResetUsedAreas();
+
             HouseGenerator[] houseGenerators = this.GetComponentsInChildren<HouseGenerator>();
 
             foreach (HouseGenerator houseGenerator in houseGenerators)

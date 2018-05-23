@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,7 +38,8 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -121,11 +121,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 555595990}
-  - component: {fileID: 555595989}
-  - component: {fileID: 555595988}
   - component: {fileID: 555595992}
   - component: {fileID: 555595991}
-  - component: {fileID: 555595993}
+  - component: {fileID: 555595994}
+  - component: {fileID: 555595989}
+  - component: {fileID: 555595988}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -183,7 +183,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1210031929}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf4bc12ed84c9241bdb9f491d699fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightScale: 0.15
+  heightScale: 1
   noiseScale: 0.05
 --- !u!114 &555595992
 MonoBehaviour:
@@ -212,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 0}
---- !u!114 &555595993
+--- !u!114 &555595994
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -220,11 +221,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 555595987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5daba15f0853b44b9abcb5c7e43a301, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ae0d583179ba9648a9a1fd700f1f3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flattenRadius: 3
-  housePrefab: {fileID: 0}
+  paintData:
+  - TextureIndex: 0
+    MinimumHeight: 0.359
+    MaximumHeight: 1
+  - TextureIndex: 1
+    MinimumHeight: 0.125
+    MaximumHeight: 0.6
+  - TextureIndex: 2
+    MinimumHeight: 0.255
+    MaximumHeight: 0
 --- !u!1 &1021973110
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +315,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1210031928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1210031929}
+  - component: {fileID: 1210031930}
+  - component: {fileID: 1210031933}
+  m_Layer: 0
+  m_Name: HouseGenerators
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1210031929
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210031928}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 555595990}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1210031930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210031928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5daba15f0853b44b9abcb5c7e43a301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flattenSize: 10
+  housePrefab: {fileID: 0}
+--- !u!114 &1210031933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210031928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5daba15f0853b44b9abcb5c7e43a301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flattenSize: 15
+  housePrefab: {fileID: 0}
 --- !u!1 &1432631912
 GameObject:
   m_ObjectHideFlags: 0

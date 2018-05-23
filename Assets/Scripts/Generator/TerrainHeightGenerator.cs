@@ -4,10 +4,10 @@
     using UnityEngine;
 
     /// <summary>
-    ///     This generates the terrain.
+    ///     This generates the terrain's height.
     /// </summary>
     [DisallowMultipleComponent]
-    public class TerrainGenerator : Singleton<TerrainGenerator>
+    public class TerrainHeightGenerator : Singleton<TerrainHeightGenerator>
     {
         /// <summary> This is the multiplier for the terrain height. </summary>
         [SerializeField]
@@ -27,8 +27,7 @@
         /// </summary>
         public void Invoke()
         {
-            if (GeneratorManager.Terrain == null)
-                throw new GeneratorException("There is no Terrain attached to this GameObject.");
+            GeneratorManager.AssertTerrain();
 
             this.GenerateTerrain();
         }
@@ -80,11 +79,11 @@
         }
 
         /// <summary>
-        ///     Called by Unity to initialize the <see cref="TerrainGenerator"/> class.
+        ///     Called by Unity to initialize the <see cref="TerrainHeightGenerator"/> class.
         /// </summary>
         private void Awake()
         {
-            this.NewPreferOld(true);
+            this.NewPreferOld(false);
 
             this.GetNewRandomOffset();
         }

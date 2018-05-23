@@ -35,7 +35,7 @@ namespace DPlay.Extension
         /// <typeparam name="T">The type of items of the original array</typeparam>
         /// <param name="originalArray">The original array (or IList)</param>
         /// <returns>A new array</returns>
-        public static T[][] SplitIntoArrayOfLenghtOneArrays<T>(this IList<T> originalArray)
+        public static T[][] SplitIntoArrayOfLengthOneArrays<T>(this IList<T> originalArray)
         {
             T[][] newArray = new T[originalArray.Count][];
 
@@ -92,6 +92,53 @@ namespace DPlay.Extension
         public static T GetItemWrap<T>(this IList<T> list, int index)
         {
             return list[index % list.Count];
+        }
+
+        /// <summary>
+        ///     Creates a flat array out of a 2-dimensional array.
+        /// </summary>
+        /// <param name="array">The array to flatten</param>
+        /// <returns>A flattened array with the same elements</returns>
+        public static T[] GetFlatArray<T>(this T[,] array)
+        {
+            T[] flat = new T[array.GetLength(0) * array.GetLength(1)];
+
+            int i = 0;
+
+            for (int x = 0; x < array.GetLength(0); x++)
+            {
+                for (int y = 0; y < array.GetLength(1); y++)
+                {
+                    flat[i++] = array[x, y];
+                }
+            }
+
+            return flat;
+        }
+
+        /// <summary>
+        ///     Creates a flat array out of a 3-dimensional array.
+        /// </summary>
+        /// <param name="array">The array to flatten</param>
+        /// <returns>A flattened array with the same elements</returns>
+        public static T[] GetFlatArray<T>(this T[,,] array)
+        {
+            T[] flat = new T[array.GetLength(0) * array.GetLength(1) * array.GetLength(2)];
+
+            int i = 0;
+
+            for (int x = 0; x < array.GetLength(0); x++)
+            {
+                for (int y = 0; y < array.GetLength(1); y++)
+                {
+                    for (int z = 0; z < array.GetLength(2); z++)
+                    {
+                        flat[i++] = array[x, y, z];
+                    }
+                }
+            }
+
+            return flat;
         }
     }
 }
