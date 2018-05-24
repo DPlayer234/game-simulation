@@ -57,16 +57,19 @@
                 for (int y = 0; y < this.alphamapHeight; y++)
                 {
                     float height = this.GetTerrainHeight(x, y);
-                    int total = 0;
+                    float total = 0.0f;
 
                     for (int i = 0; i < this.paintData.Length; i++)
                     {
-                        total += this.paintData[i].IsInRange(height) ? 1 : 0;
+                        if (this.paintData[i].IsInRange(height))
+                        {
+                            ++total;
+                        }
                     }
 
                     for (int i = 0; i < this.paintData.Length; i++)
                     {
-                        alphamaps[x, y, i] = this.paintData[i].IsInRange(height) ? 1.0f / total : 0.0f;
+                        alphamaps[x, y, i] = this.paintData[i].IsInRange(height) ? 1f / total : 0f;
                     }
                 }
             }
