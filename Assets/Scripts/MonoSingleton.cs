@@ -12,6 +12,18 @@ namespace DPlay
         public static T Instance { get; private set; }
 
         /// <summary>
+        ///     Returns the current Instance or throw an exception if there is none.
+        /// </summary>
+        /// <returns>The current instance</returns>
+        public static T AssertInstance()
+        {
+            if (MonoSingleton<T>.Instance == null)
+                throw new System.Exception("There is no Instance of this Singleton.");
+
+            return MonoSingleton<T>.Instance;
+        }
+
+        /// <summary>
         ///     Returns the instance as T
         /// </summary>
         /// <param name="instance">The instance to convert</param>

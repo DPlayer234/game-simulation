@@ -4,32 +4,26 @@
     using UnityEngine.Events;
 
     /// <summary>
-    ///     This is a volume that triggers when a matching <seealso cref="Triggerer"/> enters
+    ///     This is a volume that triggers when a matching <seealso cref="Triggerer"/> enters or exits.
     /// </summary>
-    public class TriggerVolume : MonoBehaviour
+    public class TriggerVolume : Trigger
     {
         /// <summary>
-        ///     The trigger tag.
-        ///     It has to match with that of the <see cref="Triggerer"/>
+        ///     Called by Unity when another collider enters this one.
         /// </summary>
-        public string TriggerTag = string.Empty;
-
-        /// <summary> The Event to trigger upon entering </summary>
-        public UnityEvent EnterEvent;
-
-        /// <summary> The Event to trigger upon exiting </summary>
-        public UnityEvent ExitEvent;
+        /// <param name="other"></param>
+        private void OnTriggerEnter(Collider other)
+        {
+            this.TriggerEnter(other);
+        }
 
         /// <summary>
-        ///     Invokes a specific event if there is a triggerer with a matching tag.
+        ///     Called by Unity when another collider leaves this one.
         /// </summary>
-        /// <param name="unityEvent"></param>
-        public void InvokeIfMatchingTriggerer(Triggerer triggerer, UnityEvent unityEvent)
+        /// <param name="other"></param>
+        private void OnTriggerExit(Collider other)
         {
-            if (triggerer.TriggerTag == this.TriggerTag)
-            {
-                unityEvent.Invoke();
-            }
+            this.TriggerExit(other);
         }
     }
 }

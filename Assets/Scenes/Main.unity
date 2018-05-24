@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -225,14 +225,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paintData:
-  - TextureIndex: 0
-    MinimumHeight: 0.359
+  - MinimumHeight: 0.5
     MaximumHeight: 1
-  - TextureIndex: 1
-    MinimumHeight: 0.125
-    MaximumHeight: 0.6
-  - TextureIndex: 2
-    MinimumHeight: 0.255
+  - MinimumHeight: 0.3
+    MaximumHeight: 0.5
+  - MinimumHeight: 0.3
+    MaximumHeight: 0
+  - MinimumHeight: 0
     MaximumHeight: 0
 --- !u!1 &1021973110
 GameObject:
@@ -357,9 +356,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5daba15f0853b44b9abcb5c7e43a301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flattenSize: 10
+  flattenSize: 15
   housePrefab: {fileID: 1167291672627110, guid: e65d001f7c2ca884dad50452e1636875,
     type: 2}
+  parentTo: {fileID: 0}
 --- !u!114 &1210031931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +374,7 @@ MonoBehaviour:
   flattenSize: 2
   housePrefab: {fileID: 1733333040825414, guid: 25115fb3908583e478b35ba8ff259f1b,
     type: 2}
+  parentTo: {fileID: 0}
 --- !u!114 &1210031933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,9 +386,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5daba15f0853b44b9abcb5c7e43a301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flattenSize: 15
+  flattenSize: 10
   housePrefab: {fileID: 1555548289369954, guid: 96cca42a1c7be8141a10364acc2a45a7,
     type: 2}
+  parentTo: {fileID: 0}
 --- !u!1 &1432631912
 GameObject:
   m_ObjectHideFlags: 0

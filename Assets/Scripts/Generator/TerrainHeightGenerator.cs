@@ -35,9 +35,10 @@
         /// <summary>
         ///     Returns the height of the terrain for a given point.
         /// </summary>
-        /// <param name="position">The position to get the height for.</param>
+        /// <param name="x">The X position of the point</param>
+        /// <param name="y">The Y position of the point</param>
         /// <returns>The height of the terrain.</returns>
-        private float GetHeight(float x, float y)
+        public float GetHeight(float x, float y)
         {
             x += this.randomOffset.x;
             y += this.randomOffset.y; 

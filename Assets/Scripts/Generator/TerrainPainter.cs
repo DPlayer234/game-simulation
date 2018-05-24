@@ -14,15 +14,18 @@
         /// <summary> A list of all data to be used for painting the terrain </summary>
         [SerializeField]
         private TerrainPaintData[] paintData;
-        
+
+        /// <summary> Temporary storage for the heightmap width </summary>
+        private int heightmapWidth;
+
+        /// <summary> Temporary storage for the heightmap height </summary>
+        private int heightmapHeight;
+
         /// <summary> Temporary storage for the alphamap width </summary>
         private int alphamapWidth;
 
         /// <summary> Temporary storage for the alphamap height </summary>
         private int alphamapHeight;
-
-        /// <summary> Temporary storage for the height scale </summary>
-        private float heightScale;
 
         /// <summary>
         ///     Invokes the terrain painting
@@ -30,10 +33,12 @@
         public void Invoke()
         {
             GeneratorManager.AssertTerrain();
-            
+            TerrainHeightGenerator.AssertInstance();
+
+            this.heightmapWidth = GeneratorManager.TerrainData.heightmapWidth;
+            this.heightmapHeight = GeneratorManager.TerrainData.heightmapHeight;
             this.alphamapWidth = GeneratorManager.TerrainData.alphamapWidth;
             this.alphamapHeight = GeneratorManager.TerrainData.alphamapHeight;
-            this.heightScale = GeneratorManager.TerrainData.heightmapScale.y;
 
             this.PaintTerrain();
         }
@@ -43,8 +48,8 @@
         /// </summary>
         private void PaintTerrain()
         {
-            // Get the current alphamap for convinience
-            float[,,] alphamaps = GeneratorManager.TerrainData.GetAlphamaps(0, 0, this.alphamapWidth, this.alphamapHeight);
+            // Create a new empty alphamap
+            float[,,] alphamaps = new float[this.alphamapWidth, this.alphamapHeight, GeneratorManager.TerrainData.alphamapLayers];
 
             // Iterate and set the alphamap
             for (int x = 0; x < this.alphamapWidth; x++)
@@ -52,21 +57,16 @@
                 for (int y = 0; y < this.alphamapHeight; y++)
                 {
                     float height = this.GetTerrainHeight(x, y);
-                    float total = 0.0f;
+                    int total = 0;
 
                     for (int i = 0; i < this.paintData.Length; i++)
                     {
-                        var data = this.paintData[i];
-
-                        total += (height > data.MinimumHeight && height <= data.MaximumHeight) ? 1 : 0;
+                        total += this.paintData[i].IsInRange(height) ? 1 : 0;
                     }
 
                     for (int i = 0; i < this.paintData.Length; i++)
                     {
-                        var data = this.paintData[i];
-
-                        alphamaps[x, y, data.TextureIndex] =
-                            (height > data.MinimumHeight && height <= data.MaximumHeight) ? 1 / total : 0;
+                        alphamaps[x, y, i] = this.paintData[i].IsInRange(height) ? 1.0f / total : 0.0f;
                     }
                 }
             }
@@ -81,11 +81,9 @@
         /// <returns>The height</returns>
         private float GetTerrainHeight(int alphaX, int alphaY)
         {
-            float height = GeneratorManager.TerrainData.GetInterpolatedHeight(
-                (float)alphaX / this.alphamapWidth,
-                (float)alphaY / this.alphamapHeight);
-
-            return height / this.heightScale;
+            return TerrainHeightGenerator.Instance.GetHeight(
+                (float)alphaX / this.alphamapWidth * this.heightmapWidth,
+                (float)alphaY / this.alphamapHeight * this.heightmapHeight);
         }
 
         /// <summary>

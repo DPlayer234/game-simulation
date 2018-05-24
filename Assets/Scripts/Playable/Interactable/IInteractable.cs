@@ -13,6 +13,11 @@
     public interface IInteractable
     {
         /// <summary>
+        ///     Gets whether the <seealso cref="IInteractable"/> can currently be interacted with.
+        /// </summary>
+        bool Interactable { get; }
+
+        /// <summary>
         ///     To be called when interacted with
         /// </summary>
         void Interact();

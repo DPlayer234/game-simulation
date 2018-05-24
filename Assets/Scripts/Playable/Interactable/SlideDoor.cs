@@ -12,38 +12,42 @@
     ///     This is used by doors.
     /// </summary>
     [DisallowMultipleComponent]
-    public class Door : MonoBehaviour, IInteractable
+    public class SlideDoor : MonoBehaviour, IInteractable
     {
-        /// <summary> The minimum angle for an opened door </summary>
-        private const float MinimumOpenAngle = 270.0f;
-
-        /// <summary> The maximum angle for a closed door </summary>
-        private const float MaximumCloseAngle = 359.9f;
-
-        /// <summary> The transform of the door hinge </summary>
+        /// <summary> The minimum offset for a closed door </summary>
         [SerializeField]
-        private Transform hinge;
+        private float minimumOffset = 0.0f;
 
-        /// <summary> The speed in angles per second that the door will move </summary>
+        /// <summary> The maximum offset for an opened door </summary>
         [SerializeField]
-        [Range(0.0f, 360.0f)]
-        private float movementSpeed = 90f;
+        private float maximumOffset = 0.9f;
+
+        /// <summary> The speed in units per second that the door will move </summary>
+        [SerializeField]
+        private float movementSpeed = 2.0f;
+
+        /// <summary> Whether the slide door can be interacted with </summary>
+        [SerializeField]
+        private bool interactable = true;
 
         /// <summary> The coroutine handling the door movement </summary>
         private Coroutine movementTask;
+        
+        /// <summary> The original local position </summary>
+        private Vector3 basePosition;
 
         /// <summary> Indicates, whether the door was opened </summary>
         public bool IsOpened { get; private set; }
 
         /// <summary>
         ///     From <seealso cref="IInteractable"/>.
-        ///     Can always be interacted with and will therefore always returns true.
+        ///     Returns whether the door is explicitly interactable with.
         /// </summary>
         public bool Interactable
         {
             get
             {
-                return true;
+                return this.interactable;
             }
         }
 
@@ -53,6 +57,8 @@
         [ContextMenu("Interact")]
         public void Interact()
         {
+            if (!this.Interactable) return;
+
             if (this.IsOpened)
             {
                 this.Close();
@@ -91,12 +97,12 @@
         {
             this.IsOpened = true;
 
-            while (this.hinge.localEulerAngles.y > Door.MinimumOpenAngle)
+            while (this.transform.localPosition.z < this.maximumOffset)
             {
-                this.hinge.localEulerAngles = new Vector3(
-                    0.0f,
-                    Mathf.Max(Door.MinimumOpenAngle, this.hinge.localEulerAngles.y - Time.fixedDeltaTime * this.movementSpeed),
-                    0.0f);
+                this.transform.localPosition = new Vector3(
+                    this.basePosition.x,
+                    this.basePosition.y,
+                    this.basePosition.z + Mathf.Min(this.maximumOffset, this.transform.localPosition.z + Time.fixedDeltaTime * this.movementSpeed));
 
                 yield return new WaitForFixedUpdate();
             }
@@ -110,12 +116,12 @@
         {
             this.IsOpened = false;
 
-            while (this.hinge.localEulerAngles.y < Door.MaximumCloseAngle)
+            while (this.transform.localPosition.z > this.minimumOffset)
             {
-                this.hinge.localEulerAngles = new Vector3(
-                    0.0f,
-                    Mathf.Min(Door.MaximumCloseAngle, this.hinge.localEulerAngles.y + Time.fixedDeltaTime * this.movementSpeed),
-                    0.0f);
+                this.transform.localPosition = new Vector3(
+                    this.basePosition.x,
+                    this.basePosition.y,
+                    this.basePosition.z + Mathf.Max(this.minimumOffset, this.transform.localPosition.z - Time.fixedDeltaTime * this.movementSpeed));
 
                 yield return new WaitForFixedUpdate();
             }
@@ -137,13 +143,7 @@
         /// </summary>
         private void Awake()
         {
-            if (this.hinge == null)
-            {
-                Debug.LogWarning("There was no hinge set, using own Transform.");
-                this.hinge = this.transform;
-            }
-
-            this.hinge.localEulerAngles = new Vector3(0.0f, Door.MaximumCloseAngle, 0.0f);
+            this.basePosition = this.transform.localPosition;
 
             this.IsOpened = false;
         }
